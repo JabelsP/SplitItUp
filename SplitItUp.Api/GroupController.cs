@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SplitItUp.Application.Groups;
 
-namespace SplitItUp.Application;
+namespace SplitItUp.Api;
 
 [Route("group")]
 public class GroupController(IMediator mediator) : ControllerBase
@@ -15,7 +15,7 @@ public class GroupController(IMediator mediator) : ControllerBase
         return Ok(await mediator.Send(command));
     }
     
-    [HttpPost("addmember")]
+    [HttpPost("member")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> AddMember(AddPersonCommand command)
     {
@@ -23,11 +23,23 @@ public class GroupController(IMediator mediator) : ControllerBase
         return Ok();
     }
     
-    [HttpPost("addspending")]
+    [HttpPost("spending")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> AddSpending([FromBody]AddSpendingCommand command)
     {
         await mediator.Send(command);
         return Ok();
+    }
+    
+    
+    [HttpGet("overview")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetGroupOverview(GetGroupOverviewCommand command)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+        return Ok(await mediator.Send(command));
     }
 }
