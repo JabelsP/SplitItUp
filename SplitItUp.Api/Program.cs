@@ -1,3 +1,4 @@
+using Serilog;
 using SplitItUp.Api.ErrorHandling;
 using SplitItUp.Application;
 using SplitItUp.Infrastructure;
@@ -13,6 +14,10 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddApplicationServices();
 builder.Services.AddProblemDetails();
 
+var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
+builder.Host.UseSerilog(logger);
+
 var app = builder.Build();
 app.UseExceptionHandler();
 
@@ -23,7 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseRouting();
 app.MapControllers();
 

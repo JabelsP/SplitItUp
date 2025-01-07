@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SplitItUp.Application.Persons;
 
-namespace SplitItUp.Application;
+namespace SplitItUp.Api;
 
 [Route("person")]
 public class PersonController (IMediator mediator):ControllerBase
