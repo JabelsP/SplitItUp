@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SplitItUp.Application.Groups.DTOs;
 using SplitItUp.Infrastructure;
 
@@ -11,7 +11,7 @@ public class GetGroupOverviewCommand : IRequest<GroupOverviewDto>
     public required Guid GroupId { get; set; }
 }
 
-public class GetGroupOverviewCommandHandler(AppDbContext dbContext)
+public class GetGroupOverviewCommandHandler(AppDbContext dbContext, ILogger<GetGroupOverviewCommandHandler> logger)
     : IRequestHandler<GetGroupOverviewCommand, GroupOverviewDto>
 {
     public async Task<GroupOverviewDto> Handle(GetGroupOverviewCommand request, CancellationToken cancellationToken)
