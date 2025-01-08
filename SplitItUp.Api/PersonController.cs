@@ -5,7 +5,7 @@ using SplitItUp.Application.Persons;
 namespace SplitItUp.Api;
 
 [Route("person")]
-public class PersonController (IMediator mediator):ControllerBase
+public class PersonController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]

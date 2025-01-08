@@ -1,5 +1,7 @@
 using System.Reflection;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using SplitItUp.Application.Behaviors;
 
 namespace SplitItUp.Application;
 
@@ -11,6 +13,8 @@ public static class ServiceCollectionExtensions
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
         return services;
     }
 }
