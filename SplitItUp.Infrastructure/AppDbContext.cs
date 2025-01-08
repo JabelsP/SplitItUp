@@ -8,10 +8,10 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions options) : base(options)
     {}
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql(@"Server=localhost;Port=5432;Database=splititup;User Id=postgres;Password=admin");
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     optionsBuilder.UseNpgsql(@"Server=localhost;Port=5432;Database=splititup;User Id=postgres;Password=admin");
+    // }
     
     public virtual DbSet<Person> Persons { get; set; }
     public virtual DbSet<Group> Groups { get; set; }

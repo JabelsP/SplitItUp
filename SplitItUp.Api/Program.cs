@@ -8,13 +8,15 @@ using SplitItUp.Infrastructure;
 using ExportProcessorType = OpenTelemetry.ExportProcessorType;
 
 var builder = WebApplication.CreateBuilder(args);
+IConfiguration configuration = builder.Configuration;
+var connectionString = configuration.GetConnectionString("DbConnectionString") ?? throw new Exception("Missing connection string");
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddAppDbContext(connectionString);
 builder.Services.AddApplicationServices();
 builder.Services.AddProblemDetails();
 
@@ -65,3 +67,6 @@ app.UseRouting();
 app.MapControllers();
 
 app.Run();
+
+
+public partial class Program { }

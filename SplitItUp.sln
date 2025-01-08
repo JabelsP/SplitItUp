@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitItUp.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitItUp.Tests.Unit", "SplitItUp.Tests.Unit\SplitItUp.Tests.Unit.csproj", "{3166FB2D-FD64-4B4C-B6D2-AD7D229F3293}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitItUp.Tests.Integration", "SplitItUp.Tests.Integration\SplitItUp.Tests.Integration.csproj", "{31B57378-BE14-4A2B-B0AB-00396C56BE52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{3166FB2D-FD64-4B4C-B6D2-AD7D229F3293}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3166FB2D-FD64-4B4C-B6D2-AD7D229F3293}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3166FB2D-FD64-4B4C-B6D2-AD7D229F3293}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31B57378-BE14-4A2B-B0AB-00396C56BE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31B57378-BE14-4A2B-B0AB-00396C56BE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31B57378-BE14-4A2B-B0AB-00396C56BE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31B57378-BE14-4A2B-B0AB-00396C56BE52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
