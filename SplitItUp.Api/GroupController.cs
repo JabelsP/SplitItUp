@@ -5,10 +5,10 @@ using SplitItUp.Application.Groups;
 
 namespace SplitItUp.Api;
 
+[Authorize(Roles = "User")]
 [Route("group")]
 public class GroupController(IMediator mediator) : ControllerBase
 {
-
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> CreateGroup(CreateGroupCommand command)
@@ -32,8 +32,6 @@ public class GroupController(IMediator mediator) : ControllerBase
         return Ok();
     }
     
-    
-    [Authorize(Roles = "User")]
     [HttpGet("overview")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetGroupOverview(GetGroupOverviewCommand command)
