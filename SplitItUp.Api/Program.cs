@@ -2,6 +2,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+using SplitItUp.Api;
 using SplitItUp.Api.ErrorHandling;
 using SplitItUp.Application;
 using SplitItUp.Infrastructure;
@@ -9,7 +10,8 @@ using ExportProcessorType = OpenTelemetry.ExportProcessorType;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
-var connectionString = configuration.GetConnectionString("DbConnectionString") ?? throw new Exception("Missing connection string");
+var connectionString = configuration.GetConnectionString("DbConnectionString") ??
+                       throw new Exception("Missing connection string");
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
@@ -20,33 +22,10 @@ builder.Services.AddAppDbContext(connectionString);
 builder.Services.AddApplicationServices();
 builder.Services.AddProblemDetails();
 
-builder.Services.AddOpenTelemetry()
-    .ConfigureResource(resource => resource.AddService("split-it-up"))
-    .WithTracing(tracing =>
-    {
-        tracing
-            .AddAspNetCoreInstrumentation();
+builder.Services.AddAuthenticationAndAuthorization();
 
-        tracing.AddOtlpExporter(_ =>
-        {
-            _.Endpoint = new Uri("http://172.17.0.1:4317");
-            _.ExportProcessorType = ExportProcessorType.Batch;
-            _.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-        });
-    })
-    .WithMetrics(metrics =>
-    {
-        metrics
-            .AddAspNetCoreInstrumentation();
 
-        metrics
-            .AddOtlpExporter(_ =>
-            {
-                _.Endpoint = new Uri("http://172.17.0.1:4317");
-                _.ExportProcessorType = ExportProcessorType.Batch;
-                _.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-            });
-    });
+builder.Services.AddOpenTelemetryWithExporter();
 
 var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
 
@@ -64,9 +43,13 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
 
 
-public partial class Program { }
+public partial class Program
+{
+}

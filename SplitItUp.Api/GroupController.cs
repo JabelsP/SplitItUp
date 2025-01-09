@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SplitItUp.Application.Groups;
 
@@ -32,6 +33,7 @@ public class GroupController(IMediator mediator) : ControllerBase
     }
     
     
+    [Authorize(Roles = "User")]
     [HttpGet("overview")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetGroupOverview(GetGroupOverviewCommand command)
