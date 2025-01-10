@@ -1,9 +1,8 @@
 using System.Net;
 using System.Security.Claims;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 
-namespace SplitItUp.Tests.Integration;
+namespace SplitItUp.Tests.Integration.Group;
 
 public class CreateGroupCommandHandlerTest : BaseIntegrationTest
 {
