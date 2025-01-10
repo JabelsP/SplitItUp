@@ -20,7 +20,6 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
             .GetRequiredService<AppDbContext>();
     }
     
-    
     public void Dispose()
     {
         _scope.Dispose();

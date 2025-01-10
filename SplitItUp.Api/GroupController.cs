@@ -16,6 +16,15 @@ public class GroupController(IMediator mediator) : ControllerBase
         return Ok(await mediator.Send(command));
     }
     
+    [AllowAnonymous]
+    [HttpPost("anonymous")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> CreateGroupUnAuth(CreateGroupCommand command)
+    {
+        return Ok(await mediator.Send(command));
+
+    }
+    
     [HttpPost("member")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> AddMember(AddPersonCommand command)
