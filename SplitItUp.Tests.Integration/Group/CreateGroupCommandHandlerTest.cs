@@ -14,12 +14,16 @@ public class CreateGroupCommandHandlerTest : BaseIntegrationTest
     }
 
     [Theory]
-    [InlineData("User", HttpStatusCode.OK)]
-    [InlineData("User1", HttpStatusCode.Forbidden)]
-    public async Task CreateGroupEndpoint_Should_ReturnCorrectHttpStatusCode_When_CalledWithDifferentRoles(string role, HttpStatusCode expectedStatusCode)
+    [InlineData( HttpStatusCode.OK,"User")]
+    [InlineData( HttpStatusCode.OK,"User","Admin")]
+    [InlineData( HttpStatusCode.OK,"Admin","User")]
+    [InlineData( HttpStatusCode.Forbidden,"User1")]
+    [InlineData( HttpStatusCode.Forbidden,"Admin")]
+    public async Task CreateGroupEndpoint_Should_ReturnCorrectHttpStatusCode_When_CalledWithDifferentRoles(HttpStatusCode expectedStatusCode,params string[] roles)
     {
         // Arrange
-        var inputClaims = new List<Claim> { new(ClaimTypes.Role, role) };
+        var inputClaims = new List<Claim>();
+        roles.ToList().ForEach(x=> inputClaims.Add(new Claim(ClaimTypes.Role, x)));
         var client = _factory.CreateClientWithClaims(inputClaims);
         
         // Act

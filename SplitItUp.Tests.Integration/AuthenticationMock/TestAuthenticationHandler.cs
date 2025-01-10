@@ -6,19 +6,15 @@ using Microsoft.Extensions.Options;
 
 namespace SplitItUp.Tests.Integration.AuthenticationMock;
 
-public class TestAuthenticationHandler(IOptionsMonitor<TestAuthenticationSchemeOptions> options,
-    ILoggerFactory logger, UrlEncoder encoder)
-    : AuthenticationHandler<TestAuthenticationSchemeOptions>(options, logger, encoder)
+public class TestAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
+    ILoggerFactory logger, UrlEncoder encoder, TestClaimProvider claimProvider)
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
-    
-    private List<Claim>? Claims { get; } = new List<Claim>()
-        .Concat(options.CurrentValue.Claims?.ToList() ?? new List<Claim>())
-        .ToList();
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        var identity = new ClaimsIdentity(Claims, Options.SelectedScheme);
+        var identity = new ClaimsIdentity(claimProvider.Claims, "Test");
         var principal = new ClaimsPrincipal(identity);
-        var ticket = new AuthenticationTicket(principal, Options.SelectedScheme);
+        var ticket = new AuthenticationTicket(principal, "Test");
         return Task.FromResult(AuthenticateResult.Success(ticket));
     }
 }

@@ -44,8 +44,9 @@ public class IntegrationTestWebAppFactory
             services.EnsureDbCreated<AppDbContext>();
 
             services.AddAuthentication("Test")
-                .AddScheme<TestAuthenticationSchemeOptions, TestAuthenticationHandler>("Test",
-                    options => { options.SelectedScheme = "Test"; });
+                .AddScheme<AuthenticationSchemeOptions, TestAuthenticationHandler>("Test", _ => { });
+            services.AddScoped<TestClaimProvider>(_ => new TestClaimProvider { Claims = [] });
+
         });
     }
 
@@ -55,11 +56,7 @@ public class IntegrationTestWebAppFactory
         {
             builder.ConfigureTestServices(services =>
             {
-                services.Configure<TestAuthenticationSchemeOptions>(x =>
-                {
-                    x.Claims = claims;
-                    x.SelectedScheme = "Test";
-                });
+                services.AddScoped<TestClaimProvider>(_ => new TestClaimProvider { Claims = claims });
             });
         }).CreateClient();
     }
