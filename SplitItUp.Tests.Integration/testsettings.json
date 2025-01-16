@@ -1,0 +1,7 @@
+{
+  "testValue": 111,
+  "ConnectionStrings": {
+    "DbConnectionString": "OVERWRITTEN",
+    "DbConnectionString2": "TESTCONNECTIONSTRING"
+  }
+}

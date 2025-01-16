@@ -26,6 +26,16 @@ public class IntegrationTestWebAppFactory
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        // var projectFolder = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.ToString() ??
+        //                     throw new InvalidOperationException("cant get project folder");
+        // var configPath = Path.Combine(projectFolder, "testsettings.json");
+        // builder.ConfigureAppConfiguration((context, configurationBuilder) =>
+        // {
+        //     configurationBuilder.AddJsonFile(configPath);
+        //     configurationBuilder.AddEnvironmentVariables();
+        //     configurationBuilder.Build();
+        // });
+
         builder.ConfigureTestServices(services =>
         {
             var descriptorType =
@@ -38,6 +48,11 @@ public class IntegrationTestWebAppFactory
             {
                 services.Remove(descriptor);
             }
+
+            // var serviceProvider = services.BuildServiceProvider();
+            // var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            // var connectionString = configuration.GetConnectionString("DbConnectionString") ??
+            //                        throw new Exception("Missing connection string");
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(_dbContainer.GetConnectionString()));

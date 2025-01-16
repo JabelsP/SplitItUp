@@ -1,12 +1,8 @@
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 using Serilog;
 using SplitItUp.Api;
 using SplitItUp.Api.ErrorHandling;
 using SplitItUp.Application;
 using SplitItUp.Infrastructure;
-using ExportProcessorType = OpenTelemetry.ExportProcessorType;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;

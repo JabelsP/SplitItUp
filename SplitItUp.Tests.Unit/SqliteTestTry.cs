@@ -13,7 +13,7 @@ public class SqliteTestTry
     public async Task UnitTestWithSqliteInMemory()
     {
         var connection = new SqliteConnection("Filename=:memory:");
-        connection.Open();
+        await connection.OpenAsync();
         var contextOptions = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlite(connection)
             .Options;
