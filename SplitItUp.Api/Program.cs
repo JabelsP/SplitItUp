@@ -7,7 +7,7 @@ using SplitItUp.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DbConnectionString") ??
-                       throw new Exception("Missing connection string");
+                       throw new ArgumentException("Missing connection string");
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 

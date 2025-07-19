@@ -7,9 +7,9 @@ public class Group
     public Guid Id { get; set; }
     public string Name { get; set; }
 
-    public IReadOnlyList<Person> Members => _members;
+    public IReadOnlyList<Person> Members => _members.AsReadOnly();
 
-    public IReadOnlyList<Spending> Spendings => _spendings;
+    public IReadOnlyList<Spending> Spendings => _spendings.AsReadOnly();
 
     public Group(string name)
     {
